@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SwipeLayout">
+        <attr name="swipeDirection" format="integer">
+            <flag name="left" value="1"/>
+            <flag name="right" value="2"/>
+        </attr>
+        <attr name="isFreeDragAfterOpen" format="boolean"/>
+        <attr name="isFreeHorizontalDrag" format="boolean"/>
+        <attr name="isContinuousSwipe" format="boolean"/>
+        <attr name="isTogether" format="boolean"/>
+        <attr name="rightItem" format="reference"/>
+        <attr name="leftItem" format="reference"/>
+        <attr name="draggedItem" format="reference"/>
+        <attr name="autoMovingSensitivity" format="integer"/>
+        <attr name="rightDragViewPadding" format="integer"/>
+        <attr name="leftDragViewPadding" format="integer"/>
+    </declare-styleable>
+</resources>
