@@ -85,7 +85,7 @@ public class SwipeLayout extends FrameLayout {
 
     /**
      * If a particular direction of the swipe is used ({@link #LEFT} or {@link #RIGHT}),
-     * then this flag allows you to do the swap in the opposite direction.
+     * then this flag allows you to do the swipe in the opposite direction.
      * <p>
      * If the horizontal direction is used ({@link #HORIZONTAL}),
      * this flag allows you to move the main view continuously in both directions
@@ -93,17 +93,21 @@ public class SwipeLayout extends FrameLayout {
     private boolean isFreeHorizontalDrag;
 
     /**
-     * Right boundary for main view
+     * The right bounding border of the swipe for the main view
      */
     private int rightDragViewPadding;
 
     /**
-     * Left boundary for main view
+     * The left bounding border of the swipe for the main view
      */
     private int leftDragViewPadding;
 
-    private int currentDraggingState = ViewDragHelper.STATE_IDLE;
+    /**
+     * Sensitivity of automatic closing of the main view
+     */
     private double autoOpenSpeed;
+
+    private int currentDraggingState = ViewDragHelper.STATE_IDLE;
     private ViewDragHelper dragHelper;
     private GestureDetectorCompat gestureDetector;
     private int draggingViewLeft;
@@ -462,7 +466,7 @@ public class SwipeLayout extends FrameLayout {
                 getParent().requestDisallowInterceptTouchEvent(true);
             }
             return false;
-        }  
+        }
     };
 
     private void setupPost() {
