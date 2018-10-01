@@ -3,7 +3,7 @@
 
 SwipeLayout - это проект для платформы android, предоставляющий возможность выполнять свайп для любого макета, в указанном направлении.
 
-##### Выберите язык
+### Выберите язык
 [English](https://github.com/ArmanSar/SwipeLayout/blob/master/README.md) 
 
 [Русский](https://github.com/ArmanSar/SwipeLayout/blob/master/RUSSIAN_README.md)
