@@ -57,7 +57,7 @@ SwipeLayout - это просто 'Custom ViewGroup', унаследованны
 ```
 Выше представлен пример макета. Для корректной работы свайпа необходимо в своем макете добавить  <mobile.sarproj.com.swipelayout.SwipeLayout в котором нужно указать следующие параметры:
 - app:draggedItem="@id/drag_item", где drag_item - id элемента который должен перетаскиваться
-- app:rightItem="@id/right_view", где right_view - id элемента, который останется справа при свайпе (если используется свайп вправо, то необходимо указать app:leftItem).
+- app:rightItem="@id/right_view", где right_view - id элемента, который останется справа при свайпе (если используется свайп вправо, то необходимо указать app:leftItem)
 - app:swipeDirection="left" - направление свайпа
   - app:swipeDirection="left" - свайп влево
   - app:swipeDirection="right" - свайп вправо
@@ -68,8 +68,8 @@ SwipeLayout - это просто 'Custom ViewGroup', унаследованны
 **Обязательные**
 ```
 - app:draggedItem="@id/drag_item", где drag_item - id элемента который должен перетаскиваться
-- app:rightItem="@id/right_view", где right_view - id элемента, который останется справа при свайпе влево.
-- app:leftItem="@id/left_view", где left_view - id элемента, который останется слева при свайпе вправо.
+- app:rightItem="@id/right_view", где right_view - id элемента, который останется справа при свайпе влево
+- app:leftItem="@id/left_view", где left_view - id элемента, который останется слева при свайпе вправо
 - app:swipeDirection="left" - направление свайпа
   - app:swipeDirection="left" - свайп влево
   - app:swipeDirection="right" - свайп вправо
@@ -78,9 +78,9 @@ SwipeLayout - это просто 'Custom ViewGroup', унаследованны
 
 **Необязательные**
 ```
-- app:isFreeDragAfterOpen="false|true" - позволяет главной view перемещаться и после его открытия.
-- app:isFreeHorizontalDrag="false|true" - позволяет перемещать главное view в направлении противоположном свайпу.
-- app:isContinuousSwipe="false|true" - позволяет выполнить свайп до конца экрана.
+- app:isFreeDragAfterOpen="false|true" - позволяет главной view перемещаться и после его открытия
+- app:isFreeHorizontalDrag="false|true" - позволяет перемещать главное view в направлении противоположном свайпу
+- app:isContinuousSwipe="false|true" - позволяет выполнить свайп до конца экрана
 - app:isTogether="false|true" - вторичная view будет перемещаться вместе с главной view
 - app:autoMovingSensitivity="1000" - чувствительность автоматического закрытия главного view
 - app:rightDragViewPadding="0dp" - правая ограничительная граница свайпа для главного view
@@ -95,7 +95,7 @@ SwipeLayout.openRight() - выполнить свайп влево
 SwipeLayout.openRightCompletely() - выполнить свайп вправо до конца экрана
 SwipeLayout.openLeftCompletely() - выполнить свайп влево до конца экрана
 SwipeLayout.isClosed() - находится ли главное view в исходном состоянии
-SwipeLayout.isMoving() - находится ли главное view в режиме перемещения.
+SwipeLayout.isMoving() - находится ли главное view в режиме перемещения
 ```
 **Callback**
 ```java
@@ -118,10 +118,10 @@ SwipeLayout.setOnActionsListener(new SwipeLayout.SwipeActionsListener() {
 
 **Примечание**
 ```
-- флаг isContinuousSwipe работает в двух режимах, с указанием вторичного view (app:leftItem, app:rightItem) и без его указания.
-- если используется свайп и влево и вправо (app:swipeDirection="left|right"), то флаг isContinuousSwipe будет проигнорирован.
-- если указано конкретное направление свайпа и установлен флаг isContinuousSwipe, то флаг isFreeDragAfterOpen будет автоматически установлен как true.
-- если используется свайп и влево и вправо (app:swipeDirection="left|right"), то флаг isFreeHorizontalDrag будет работать иначе. Он будет устанавливать режим, при котором, главное  view будет непрерывно перемещаться в обоих направлениях.
+- флаг isContinuousSwipe работает в двух режимах, с указанием вторичного view (app:leftItem, app:rightItem) и без его указания
+- если используется свайп и влево и вправо (app:swipeDirection="left|right"), то флаг isContinuousSwipe будет проигнорирован
+- если указано конкретное направление свайпа и установлен флаг isContinuousSwipe, то флаг isFreeDragAfterOpen будет автоматически установлен как true
+- если используется свайп и влево и вправо (app:swipeDirection="left|right"), то флаг isFreeHorizontalDrag будет работать иначе. Он будет устанавливать режим, при котором, главное  view будет непрерывно перемещаться в обоих направлениях
 ```
 
 ## Интеграция
