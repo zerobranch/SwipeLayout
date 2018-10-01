@@ -69,7 +69,7 @@ SwipeLayout - это просто 'Custom ViewGroup', унаследованны
 ```
 - app:draggedItem="@id/drag_item", где drag_item - id элемента который должен перетаскиваться
 - app:rightItem="@id/right_view", где right_view - id элемента, который останется справа при свайпе влево.
-- app:leftItem="@id/left_view", где right_view - id элемента, который останется слева при свайпе вправо.
+- app:leftItem="@id/left_view", где left_view - id элемента, который останется слева при свайпе вправо.
 - app:swipeDirection="left" - направление свайпа
   - app:swipeDirection="left" - свайп влево
   - app:swipeDirection="right" - свайп вправо
