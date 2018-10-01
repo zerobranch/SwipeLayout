@@ -134,15 +134,15 @@ SwipeLayout.setOnActionsListener(new SwipeLayout.SwipeActionsListener() {
     @Override
     public void onOpen(int direction, boolean isContinuous) {
         if (direction == SwipeLayout.RIGHT) {
-            // был выполнен свайп вправо
+            // was executed swipe to the right
         } else if (direction == SwipeLayout.LEFT) {
-            // был выполнен свайп влево
+            // was executed swipe to the left
         }
     }
 
     @Override  
     public void onClose() {  
-        // главное view вернулось в начальное состояние
+        // the main view has returned to the default state
     }
 });
 ```
