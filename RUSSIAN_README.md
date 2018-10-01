@@ -76,7 +76,7 @@ SwipeLayout - это просто 'Custom ViewGroup', унаследованны
   - app:swipeDirection="left|right" - свайп и влево и вправо
 ```
 
-**Дополнительные**
+**Необязательные**
 ```
 - app:isFreeDragAfterOpen="false|true" - позволяет главной view перемещаться и после его открытия.
 - app:isFreeHorizontalDrag="false|true" - позволяет перемещать главное view в направлении противоположном свайпу.
