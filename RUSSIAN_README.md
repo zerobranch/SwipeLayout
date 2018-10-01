@@ -5,7 +5,9 @@
 SwipeLayout - это проект для платформы android, предоставляющий возможность выполнять свайп для любого макета, в указанном направлении.
 
 ##### Выберите язык
-[English](https://github.com/ArmanSar/SwipeLayout/README.md) [Русский](https://github.com/ArmanSar/SwipeLayout/blob/master/RUSSIAN_README.md)
+[English](https://github.com/ArmanSar/SwipeLayout/blob/master/README.md) 
+
+[Русский](https://github.com/ArmanSar/SwipeLayout/blob/master/RUSSIAN_README.md)
 
 ## Описание
 SwipeLayout - это просто 'Custom ViewGroup', унаследованный от FrameLayout, которая дает возможность просто и легко использовать функцию 'swipe to dismiss', без использования ItemTouchHelper, для любого макета.
