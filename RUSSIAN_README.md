@@ -104,9 +104,9 @@ SwipeLayout.setOnActionsListener(new SwipeLayout.SwipeActionsListener() {
     @Override
     public void onOpen(int direction, boolean isContinuous) {
         if (direction == SwipeLayout.RIGHT) {
-			// был выполнен свайп вправо
+            // был выполнен свайп вправо
         } else if (direction == SwipeLayout.LEFT) {
-			// был выполнен свайп влево
+            // был выполнен свайп влево
         }
     }
 
@@ -127,7 +127,7 @@ SwipeLayout.setOnActionsListener(new SwipeLayout.SwipeActionsListener() {
 
 ## Интеграция
 **Вариант 1**
-Скопируйте эти два файла из [gist](https://gist.github.com/ArmanSar/64359efd499ed38f6996390e79a5eadc) в ваш проект и используйте.
+Скопируйте файл attrs.xml в папку src/res/values и файл SwipeLayout.java в папку с исходным кодом вашего проекта из [gist](https://gist.github.com/ArmanSar/64359efd499ed38f6996390e79a5eadc) и используйте.
 
 **Вариант 2**
 
