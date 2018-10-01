@@ -1,69 +1,135 @@
 # SwipeLayout
-[![Jitpack ](https://img.shields.io/jitpack/v/jitpack/maven-simple.svg)](https://jitpack.io/)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/ArmanSar/fileloader/blob/master/LICENSE)
+[![Jitpack ](https://img.shields.io/jitpack/v/jitpack/maven-simple.svg)](https://jitpack.io/) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/ArmanSar/fileloader/blob/master/LICENSE)
 
-The library what allows you to execute a swipe for the android platform
+SwipeLayout is a project for the android platform, providing the opportunity to perform swipe for any layout, in the specified direction.
 
-## Descripton
-File Loader - is a library for the android platform. It allows you to download any files without much effort and get the result in the thread you specified.
+##### Choose language
+[English](https://github.com/ArmanSar/SwipeLayout/blob/master/README.md) 
+
+[Русский](https://github.com/ArmanSar/SwipeLayout/blob/master/RUSSIAN_README.md)
+
+## Description
+SwipeLayout is just a 'Custom ViewGroup', extended from FrameLayout, which provides easy and fast to use the 'swipe to dismiss' function, without using the ItemTouchHelper, for any layout.
 
 ## Capabilities
-- Download any files by their link
+- Executing the swipe to the left
+- Executing the swipe to the right
+- Executing the swipe and left and right
+- Using any your layouts
+- Four modes of swipe, which can be combined with each other
 
 ## How to use ?
+Example of use. Swipe to the left
+```xml
+<mobile.sarproj.com.swipelayout.SwipeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe_layout"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    app:draggedItem="@id/drag_item"
+    app:rightItem="@id/right_view"
+    app:swipeDirection="left">
 
-```java
-Loader.with(Context)
-        .fromUrl("YOUR_URL")
-        .load();
+    <ImageView
+        android:id="@+id/right_view"
+        android:layout_width="90dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="#ff5722"
+        android:gravity="center"
+        android:paddingEnd="24dp"
+        android:paddingStart="24dp"
+        android:src="@drawable/ic_delete"/>
+  
+    <TextView  
+        android:id="@+id/drag_item"  
+        android:layout_width="match_parent"  
+        android:layout_height="match_parent"  
+        android:background="#eeeeee"  
+        android:gravity="center_vertical"  
+        android:paddingEnd="10dp"  
+        android:paddingStart="20dp"  
+        android:textSize="20sp"/>
+
+</mobile.sarproj.com.swipelayout.SwipeLayout>
+```
+```
+Above is an example of a layout. For the correct operation of the swipe it is necessary to add <mobile.sarproj.com.swipelayout.SwipeLayout in your layout in which you need to specify the following parameters:
+- app:draggedItem="@id/drag_item", where drag_item is the id of the element to be dragged
+- app:rightItem="@id/right_view", where right_view is the id of the element that will remain on the right with the swipe to the left (if you use swipe to the right, you must specify app: leftItem).
+- app:swipeDirection="left" - направление свайпа
+  - app:swipeDirection="left" - swipe to the left
+  - app:swipeDirection="right" - swipe to the right
+  - app:swipeDirection="left|right" - swipe left and right
 ```
 
-## Description of methods
+## Description of parameters
 **Required**
 ```
-- with(Cntext) - the main method with the context
-- addInQueue("YOUR_URL") - add the file to the download queue
-- load() - start downloading files
+- app:draggedItem="@id/drag_item" - where drag_item is the id of the element to be dragged
+- app:rightItem="@id/right_view" - where right_view - id of the element that will remain on the right with the swipe to the left
+- app:leftItem="@id/left_view" - where left_view - id of the element that will remain on the left with the swipe to the right
+- app:swipeDirection="left" - direction of a swipe
+  - app:swipeDirection="left" - swipe to the left
+  - app:swipeDirection="right" - swipe to the right
+  - app:swipeDirection="left|right" - swipe left and right
 ```
 
 **Optional**
 ```
-- to("YOUR_PATH") - the path to which the file will be uploaded
-- addInQueue("YOUR_URL") - add file to the download queue
-- skipIfFileExist() - the download will be terminated if the file already exists (by default, the file is overwritten)
-- abortNextIfError() - interrupt the remaining downloads waiting in the queue, if an error occurred during the download
-- makeImmortal() - the files will be downloaded in the foreground. Download does not stop even if it is unloaded from memory
-- notification(Notification) - connect your notification, which will be displayed at the time of downloading files
-- redownloadAttemptCount(4) - the number of attempts to download the file, in case there was an error
-- skipCache() - do not save the file in the device memory
-- viewNotificationOnFinish() - do not close the notification after downloading files
-- hideDefaultNotification() - hide notification when loading files (not recommended)
-- downloadReceiver() - setting DownloadReceiver will allow you to set events to get feedback from the loader
-- onStart(OnStart) - the event notifies the start of the download of the next file
-- onError(OnError) - the event notifies you when an error occurred while loading the file
-- onCompleted(OnCompleted) - the event notifies when the next file is being downloaded
-- onProgress(OnProgress) - event to track the progress of the download
-- receivedFile(ReceivedFile) - after the download is complete, get the path to the downloaded file
-- receivedFileSource(ReceivedFileSource) - after the download is complete, get the source file as a byte array
-- enableLogging() - enable logging while downloading files
+- app:isFreeDragAfterOpen="false|true" - allows the main view to move after its opening
+- app:isFreeHorizontalDrag="false|true" - allows you to move the main view in the opposite direction to the swipe
+- app:isContinuousSwipe="false|true" - allows you to execute the swipe to the end of the screen
+- app:isTogether="false|true" - the secondary view will move along with the main view
+- app:autoMovingSensitivity="1000" - sensitivity of automatic closing of the main view
+- app:rightDragViewPadding="0dp" - the right bounding border of the swipe for the main view
+- app:leftDragViewPadding="0dp" - the left bounding border of the swipe for the main view
 ```
 
-**Additional Methods**
+**Control from the code**
 ```
-loader.cancel() - abort all downloads and delete the underloaded file
-loader.unsubscribe - unsubscribe from events (download will not be interrupted)
+SwipeLayout.close() - cancel swipe, return the main view to its original state
+SwipeLayout.openLeft() - execute swipe to the right
+SwipeLayout.openRight() - execute swipe to the left
+SwipeLayout.openRightCompletely() - execute swipe to the right to the end of the screen 
+SwipeLayout.openLeftCompletely() - execute swipe to the left to the end of the screen 
+SwipeLayout.isClosed() - is the main view in the default state
+SwipeLayout.isMoving() - is the main view in the moving
+```
+**Callback**
+```java
+SwipeLayout.setOnActionsListener(new SwipeLayout.SwipeActionsListener() {
+    @Override
+    public void onOpen(int direction, boolean isContinuous) {
+        if (direction == SwipeLayout.RIGHT) {
+            // был выполнен свайп вправо
+        } else if (direction == SwipeLayout.LEFT) {
+            // был выполнен свайп влево
+        }
+    }
+
+    @Override  
+    public void onClose() {  
+        // главное view вернулось в начальное состояние
+    }
+});
 ```
 
 **Note**
 ```
-- if you do not specify to ("YOUR_PATH"), then by default the files will be saved in the application cache - Context.getCacheDir()
-- notification(Notification), hideDefaultNotification(), viewNotificationOnFinish() - work only when you set makeImmortal()
-- to set the events (onStart, onError, etc.), you must set DownloadReceiver
-- if you set the receivedFileSource event, the data will go into this method WITHOUT CONSERVATION on the device
+- the isContinuousSwipe flag works in two modes, with a secondary view (app:leftItem, app:rightItem) and without it
+- if you use both swipe left and right (app:swipeDirection="left|right"), the isContinuousSwipe flag will be ignored
+- if a specific direction of the swipe is specified and the isContinuousSwipe flag is set, the isFreeDragAfterOpen flag is automatically set to true
+- if you use swipe and left and right (app:swipeDirection="left|right"), the isFreeHorizontalDrag flag will work differently. It will set the mode at which the main view will continuously move in both directions
 ```
 
-
 ## Integration
+**Option 1**
+Copy the attrs.xml file to the src/res/values folder and the SwipeLayout.java file to the source code folder of your project from the [gist](https://gist.github.com/ArmanSar/64359efd499ed38f6996390e79a5eadc) and to use.
+
+**Option 2**
+
 Add it in your root build.gradle at the end of repositories:
 ```groovy
 allprojects {
@@ -77,7 +143,7 @@ allprojects {
 Add the following dependency to your module's build.gradle:
 ```groovy
 dependencies {
-    compile 'com.github.ArmanSar:fileloader:0.1.2'
+    implementation 'com.github.ArmanSar:SwipeLayout:1.0.0'
 }
 ```
 
