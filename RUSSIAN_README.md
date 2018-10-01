@@ -83,8 +83,8 @@ SwipeLayout - это просто 'Custom ViewGroup', унаследованны
 - app:isContinuousSwipe="false|true" - позволяет выполнить свайп до конца экрана.
 - app:isTogether="false|true" - вторичная view будет перемещаться вместе с главной view
 - app:autoMovingSensitivity="1000" - чувствительность автоматического закрытия главного view
-- app:rightDragViewPadding="0" - правая ограничительная граница свайпа для главного view
-- app:leftDragViewPadding="0" - левая ограничительная граница свайпа для главного view
+- app:rightDragViewPadding="0dp" - правая ограничительная граница свайпа для главного view
+- app:leftDragViewPadding="0dp" - левая ограничительная граница свайпа для главного view
 ```
 
 **Программное управление**
