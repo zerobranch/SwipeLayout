@@ -13,7 +13,7 @@
         <attr name="leftItem" format="reference"/>
         <attr name="draggedItem" format="reference"/>
         <attr name="autoMovingSensitivity" format="integer"/>
-        <attr name="rightDragViewPadding" format="integer"/>
-        <attr name="leftDragViewPadding" format="integer"/>
+        <attr name="rightDragViewPadding" format="dimension"/>
+        <attr name="leftDragViewPadding" format="dimension"/>
     </declare-styleable>
 </resources>

@@ -137,8 +137,8 @@ public class SwipeLayout extends FrameLayout {
         staticRightViewId = typedArray.getResourceId(R.styleable.SwipeLayout_rightItem, 0);
         draggedViewId = typedArray.getResourceId(R.styleable.SwipeLayout_draggedItem, 0);
         autoOpenSpeed = typedArray.getInt(R.styleable.SwipeLayout_autoMovingSensitivity, DEFAULT_AUTO_OPEN_SPEED);
-        rightDragViewPadding = typedArray.getInt(R.styleable.SwipeLayout_rightDragViewPadding, 0);
-        leftDragViewPadding = typedArray.getInt(R.styleable.SwipeLayout_leftDragViewPadding, 0);
+        rightDragViewPadding = (int) typedArray.getDimension(R.styleable.SwipeLayout_rightDragViewPadding, 0);
+        leftDragViewPadding = (int) typedArray.getDimension(R.styleable.SwipeLayout_leftDragViewPadding, 0);
 
         parametersAdjustment();
         typedArray.recycle();
@@ -728,4 +728,3 @@ public class SwipeLayout extends FrameLayout {
         void onClose();
     }
 }
-
