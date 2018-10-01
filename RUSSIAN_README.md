@@ -88,8 +88,8 @@ SwipeLayout - это просто 'Custom ViewGroup', унаследованны
 ```
 
 **Программное управление**
-```java
-SwipeLayout.close() - отменить свайп, вернуть главное view в исходнео состояние
+```
+SwipeLayout.close() - отменить свайп, вернуть главное view в исходное состояние
 SwipeLayout.openLeft() - выполнить свайп вправо
 SwipeLayout.openRight() - выполнить свайп влево
 SwipeLayout.openRightCompletely() - выполнить свайп вправо до конца экрана
