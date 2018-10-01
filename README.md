@@ -16,7 +16,7 @@ SwipeLayout is just a 'Custom ViewGroup', extended from FrameLayout, which provi
 <img src="/screenshots/right.gif" alt="right.gif" title="right.gif" width="360" height="640" />
 <img src="/screenshots/horizontal.gif" alt="horizontal.gif" title="horizontal.gif" width="360" height="640" />
 
-## Capabilities
+## Features
 - Executing the swipe to the left
 - Executing the swipe to the right
 - Executing the swipe and left and right
