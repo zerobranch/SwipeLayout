@@ -23,6 +23,29 @@ SwipeLayout is just a 'Custom ViewGroup', extended from FrameLayout, which provi
 - Using any your layouts
 - Four modes of swipe, which can be combined with each other
 
+## Integration
+**Option 1**
+Copy the attrs.xml file to the src/res/values folder and the SwipeLayout.java file to the source code folder of your project from the [gist](https://gist.github.com/ArmanSar/64359efd499ed38f6996390e79a5eadc) and to use.
+
+**Option 2**
+
+Add it in your root build.gradle at the end of repositories:
+```groovy
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+Add the following dependency to your module's build.gradle:
+```groovy
+dependencies {
+    implementation 'com.github.ArmanSar:SwipeLayout:1.0.0'
+}
+```
+
 ## How to use ?
 Example of use. Swipe to the left
 ```xml
@@ -127,29 +150,6 @@ SwipeLayout.setOnActionsListener(new SwipeLayout.SwipeActionsListener() {
 - if you use both swipe left and right (app:swipeDirection="left|right"), the isContinuousSwipe flag will be ignored
 - if a specific direction of the swipe is specified and the isContinuousSwipe flag is set, the isFreeDragAfterOpen flag is automatically set to true
 - if you use swipe and left and right (app:swipeDirection="left|right"), the isFreeHorizontalDrag flag will work differently. It will set the mode at which the main view will continuously move in both directions
-```
-
-## Integration
-**Option 1**
-Copy the attrs.xml file to the src/res/values folder and the SwipeLayout.java file to the source code folder of your project from the [gist](https://gist.github.com/ArmanSar/64359efd499ed38f6996390e79a5eadc) and to use.
-
-**Option 2**
-
-Add it in your root build.gradle at the end of repositories:
-```groovy
-allprojects {
-    repositories {
-        ...
-        maven { url 'https://jitpack.io' }
-    }
-}
-```
-
-Add the following dependency to your module's build.gradle:
-```groovy
-dependencies {
-    implementation 'com.github.ArmanSar:SwipeLayout:1.0.0'
-}
 ```
 
 ## License
