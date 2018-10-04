@@ -15,9 +15,7 @@ SwipeLayout - это просто 'Custom ViewGroup', унаследованны
 Скачайте [APK](https://github.com/ArmanSar/SwipeLayout/releases/download/1.0.0/SwipeLayout_app.apk) данного примера и попробуйте!
 
 ## Скриншоты
-<img src="/screenshots/left.gif" alt="left.gif" title="left.gif" width="360" height="640" />
-<img src="/screenshots/right.gif" alt="right.gif" title="right.gif" width="360" height="640" />
-<img src="/screenshots/horizontal.gif" alt="horizontal.gif" title="horizontal.gif" width="360" height="640" />
+<img src="/screenshots/left.gif" alt="left.gif" title="left.gif" width="180" height="340" /> <img src="/screenshots/right.gif" alt="right.gif" title="right.gif" width="180" height="340" /> <img src="/screenshots/horizontal.gif" alt="horizontal.gif" title="horizontal.gif" width="180" height="340" />
 
 ## Особенности
 - Выполнение свайпа влево
