@@ -1,5 +1,5 @@
 # SwipeLayout
-[![Jitpack ](https://img.shields.io/jitpack/v/jitpack/maven-simple.svg)](https://jitpack.io/) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/ArmanSar/fileloader/blob/master/LICENSE)
+[![](https://jitpack.io/v/ArmanSar/SwipeLayout.svg)](https://jitpack.io/#ArmanSar/SwipeLayout) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/ArmanSar/fileloader/blob/master/LICENSE)
 
 SwipeLayout - это проект для платформы android, предоставляющий возможность выполнять свайп для любого макета, в указанном направлении.
 
