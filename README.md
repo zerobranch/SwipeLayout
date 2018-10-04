@@ -12,6 +12,8 @@ SwipeLayout is a project for the android platform, providing the opportunity to 
 SwipeLayout is just a 'Custom ViewGroup', extended from FrameLayout, which provides easy and fast to use the 'swipe to dismiss' function, without using the ItemTouchHelper, for any layout.
 
 ## Download
+<font color="red">Status: **Not yet implemented**</font>
+
 Download the sample [APK](https://github.com/ArmanSar/SwipeLayout/releases/download/1.0.0/SwipeLayout_app.apk) and try it out!
 
 ## Screenshots
