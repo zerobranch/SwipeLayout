@@ -1,5 +1,5 @@
 # SwipeLayout
-[![](https://jitpack.io/v/ArmanSar/SwipeLayout.svg)](https://jitpack.io/#ArmanSar/SwipeLayout) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/ArmanSar/fileloader/blob/master/LICENSE) ![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SwipeLayout-green.svg?style=flat)
+[![](https://jitpack.io/v/ArmanSar/SwipeLayout.svg)](https://jitpack.io/#ArmanSar/SwipeLayout) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/ArmanSar/fileloader/blob/master/LICENSE) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SwipeLayout-green.svg?style=flat)](https://android-arsenal.com/details/1/7215)
 
 SwipeLayout - это проект для платформы android, предоставляющий возможность выполнять свайп для любого макета, в указанном направлении.
 
