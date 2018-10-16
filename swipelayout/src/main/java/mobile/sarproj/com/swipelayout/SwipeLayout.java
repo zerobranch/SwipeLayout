@@ -144,6 +144,31 @@ public class SwipeLayout extends FrameLayout {
         typedArray.recycle();
     }
 
+    private void updateState() {
+        if (isClosed()) {
+            isLeftOpen = false;
+            isRightOpen = false;
+
+            if (actionsListener != null) {
+                actionsListener.onClose();
+            }
+        } else if (isLeftOpenCompletely() || isLeftViewOpen()) {
+            isLeftOpen = true;
+            isRightOpen = false;
+
+            if (actionsListener != null) {
+                actionsListener.onOpen(RIGHT, isLeftOpenCompletely());
+            }
+        } else if (isRightOpenCompletely() || isRightViewOpen()) {
+            isLeftOpen = false;
+            isRightOpen = true;
+
+            if (actionsListener != null) {
+                actionsListener.onOpen(LEFT, isRightOpenCompletely());
+            }
+        }
+    }
+
     private final ViewDragHelper.Callback dragHelperCallback = new ViewDragHelper.Callback() {
         @Override
         public void onViewDragStateChanged(int state) {
@@ -151,29 +176,9 @@ public class SwipeLayout extends FrameLayout {
                 return;
 
             if (isIdleAfterMoving(state)) {
-                if (isClosed()) {
-                    isLeftOpen = false;
-                    isRightOpen = false;
-
-                    if (actionsListener != null) {
-                        actionsListener.onClose();
-                    }
-                } else if (isLeftOpenCompletely() || isLeftViewOpen()) {
-                    isLeftOpen = true;
-                    isRightOpen = false;
-
-                    if (actionsListener != null) {
-                        actionsListener.onOpen(RIGHT, isLeftOpenCompletely());
-                    }
-                } else if (isRightOpenCompletely() || isRightViewOpen()) {
-                    isLeftOpen = false;
-                    isRightOpen = true;
-
-                    if (actionsListener != null) {
-                        actionsListener.onOpen(LEFT, isRightOpenCompletely());
-                    }
-                }
+                updateState();
             }
+
             currentDraggingState = state;
         }
 
@@ -584,6 +589,117 @@ public class SwipeLayout extends FrameLayout {
     }
 
     /**
+     * Performs manual swipe to the left
+     * @param animated - flag to animate opening
+     */
+    public void openRight(boolean animated) {
+        if (animated) {
+            openRight();
+        } else if (isDragIdle(currentDraggingState) && ((currentDirection == LEFT && !isEmptyRightView())
+                || currentDirection == HORIZONTAL) && !isRightOpen) {
+            if (isTogether) {
+                staticRightView.offsetLeftAndRight(-1 * (isLeftOpen ? getRightViewWidth() * 2 : getRightViewWidth()));
+            }
+
+            draggedView.offsetLeftAndRight(-1 * (isLeftOpen ? getRightViewWidth() * 2 : getRightViewWidth()));
+            draggingViewLeft -= (isLeftOpen ? getRightViewWidth() * 2 : getRightViewWidth());
+            updateState();
+        }
+    }
+
+    /**
+     * Performs a full manual swipe to the left
+     * @param animated - flag to animate opening
+     */
+    public void openRightCompletely(boolean animated) {
+        if (animated) {
+            openRightCompletely();
+        } else {
+            if (isDragIdle(currentDraggingState) && currentDirection == LEFT) {
+                if (isTogether) {
+                    staticRightView.offsetLeftAndRight(-horizontalWidth);
+                }
+
+                draggedView.offsetLeftAndRight(-horizontalWidth);
+                draggingViewLeft -= horizontalWidth;
+                updateState();
+            }
+        }
+    }
+
+    /**
+     * Performs manual swipe to the right
+     * @param animated - flag to animate opening
+     */
+    public void openLeft(boolean animated) {
+        if (animated) {
+            openLeft();
+        } else if (isDragIdle(currentDraggingState) && ((currentDirection == RIGHT && !isEmptyLeftView())
+                || currentDirection == HORIZONTAL) && !isLeftOpen) {
+            if (isTogether) {
+                staticLeftView.offsetLeftAndRight((isRightOpen ? getLeftViewWidth() * 2 : getLeftViewWidth()));
+            }
+
+            draggedView.offsetLeftAndRight((isRightOpen ? getLeftViewWidth() * 2 : getLeftViewWidth()));
+            draggingViewLeft += (isRightOpen ? getLeftViewWidth() * 2 : getLeftViewWidth());
+            updateState();
+        }
+    }
+
+    /**
+     * Performs a full manual swipe to the right
+     * @param animated - flag to animate opening
+     */
+    public void openLeftCompletely(boolean animated) {
+        if (animated) {
+            openRightCompletely();
+        } else {
+            if (isDragIdle(currentDraggingState) && currentDirection == RIGHT) {
+                if (isTogether) {
+                    staticRightView.offsetLeftAndRight(horizontalWidth);
+                }
+
+                draggedView.offsetLeftAndRight(horizontalWidth);
+                draggingViewLeft += horizontalWidth;
+                updateState();
+            }
+        }
+    }
+
+    /**
+     * Performs manual close
+     * @param animated - flag to animate closing
+     */
+    public void close(boolean animated) {
+        if (animated) {
+            close();
+        } else {
+            if (isTogether) {
+                if (staticLeftView != null && currentDirection == RIGHT) {
+                    staticLeftView.layout(CLOSE_POSITION, staticLeftView.getTop(),
+                            staticLeftView.getWidth(), staticLeftView.getBottom());
+                } else if (staticRightView != null && currentDirection == LEFT) {
+                    staticRightView.layout(horizontalWidth - staticRightView.getWidth(), staticRightView.getTop(),
+                            horizontalWidth, staticRightView.getBottom());
+                } else if (currentDirection == HORIZONTAL && staticRightView != null && staticLeftView != null) {
+                    staticLeftView.layout(CLOSE_POSITION, staticLeftView.getTop(),
+                            staticLeftView.getWidth(), staticLeftView.getBottom());
+                    staticRightView.layout(horizontalWidth - staticRightView.getWidth(), staticRightView.getTop(),
+                            horizontalWidth, staticRightView.getBottom());
+                }
+            }
+
+            draggedView.layout(CLOSE_POSITION,
+                    draggedView.getTop(),
+                    draggedView.getWidth(),
+                    draggedView.getBottom());
+
+            draggingViewLeft = CLOSE_POSITION;
+            updateState();
+        }
+    }
+
+    /**
      * Performs manual swipe to the right
      */
     public void openLeft() {
@@ -604,7 +720,7 @@ public class SwipeLayout extends FrameLayout {
     }
 
     /**
-     * Performs a full manual swipe to the left
+     * Performs a full manual swipe to the right
      */
     public void openLeftCompletely() {
         if (isDragIdle(currentDraggingState) && currentDirection == RIGHT) {
@@ -613,7 +729,7 @@ public class SwipeLayout extends FrameLayout {
     }
 
     /**
-     * Performs a full manual swipe to the right
+     * Performs a full manual swipe to the left
      */
     public void openRightCompletely() {
         if (isDragIdle(currentDraggingState) && currentDirection == LEFT) {
