@@ -123,6 +123,11 @@ SwipeLayout.openLeft() - выполнить свайп вправо
 SwipeLayout.openRight() - выполнить свайп влево
 SwipeLayout.openRightCompletely() - выполнить свайп вправо до конца экрана
 SwipeLayout.openLeftCompletely() - выполнить свайп влево до конца экрана
+SwipeLayout.close(false) - отменить свайп, вернуть главное view в исходное состояние без анимации
+SwipeLayout.openLeft(false) - выполнить свайп вправо без анимации
+SwipeLayout.openRight(false) - выполнить свайп влево без анимации
+SwipeLayout.openRightCompletely(false) - выполнить свайп вправо до конца экрана без анимации
+SwipeLayout.openLeftCompletely(false) - выполнить свайп влево до конца экрана без анимации
 SwipeLayout.isClosed() - находится ли главное view в исходном состоянии
 SwipeLayout.isMoving() - находится ли главное view в режиме перемещения
 ```
