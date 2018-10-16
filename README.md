@@ -123,6 +123,11 @@ SwipeLayout.openLeft() - execute swipe to the right
 SwipeLayout.openRight() - execute swipe to the left
 SwipeLayout.openRightCompletely() - execute swipe to the right to the end of the screen 
 SwipeLayout.openLeftCompletely() - execute swipe to the left to the end of the screen 
+SwipeLayout.close(false) - cancel swipe, return the main view to its original state without animation
+SwipeLayout.openLeft(false) - execute swipe to the right without animation
+SwipeLayout.openRight(false) - execute swipe to the left without animation
+SwipeLayout.openRightCompletely(false) - execute swipe to the right to the end of the screen without animation
+SwipeLayout.openLeftCompletely(false) - execute swipe to the left to the end of the screen without animation
 SwipeLayout.isClosed() - is the main view in the default state
 SwipeLayout.isMoving() - is the main view in the moving
 ```
