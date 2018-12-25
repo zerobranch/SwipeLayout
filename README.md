@@ -87,7 +87,7 @@ Example of use. Swipe to the left
 Above is an example of a layout. For the correct operation of the swipe it is necessary to add <mobile.sarproj.com.swipelayout.SwipeLayout in your layout in which you need to specify the following parameters:
 - app:draggedItem="@id/drag_item", where drag_item is the id of the element to be dragged
 - app:rightItem="@id/right_view", where right_view is the id of the element that will remain on the right with the swipe to the left (if you use swipe to the right, you must specify app: leftItem).
-- app:swipeDirection="left" - направление свайпа
+- app:swipeDirection="left" - direction of a swipe
   - app:swipeDirection="left" - swipe to the left
   - app:swipeDirection="right" - swipe to the right
   - app:swipeDirection="left|right" - swipe left and right
