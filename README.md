@@ -50,7 +50,7 @@ dependencies {
 ## How to use ?
 Example of use. Swipe to the left
 ```xml
-<mobile.sarproj.com.swipelayout.SwipeLayout
+<mobile.sarproj.com.layout.SwipeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipe_layout"
