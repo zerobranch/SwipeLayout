@@ -12,7 +12,7 @@ SwipeLayout is a project for the android platform, providing the opportunity to 
 SwipeLayout is just a 'Custom ViewGroup', extended from FrameLayout, which provides easy and fast to use the 'swipe to dismiss' function, without using the ItemTouchHelper, for any layout.
 
 ## Download
-Download the sample [APK](https://github.com/ArmanSar/SwipeLayout/releases/download/1.0.8/SwipeLayout_app.apk) and try it out!
+Download the sample [APK](https://github.com/ArmanSar/SwipeLayout/releases/download/1.0.9/SwipeLayout_app.apk) and try it out!
 
 ## Screenshots
 <img src="/screenshots/left.gif" alt="left.gif" title="left.gif" width="180" height="340" /> <img src="/screenshots/right.gif" alt="right.gif" title="right.gif" width="180" height="340" /> <img src="/screenshots/horizontal.gif" alt="horizontal.gif" title="horizontal.gif" width="180" height="340" />
@@ -43,7 +43,7 @@ allprojects {
 Add the following dependency to your module's build.gradle:
 ```groovy
 dependencies {
-    implementation 'com.github.ArmanSar:SwipeLayout:1.0.8'
+    implementation 'com.github.ArmanSar:SwipeLayout:1.0.9'
 }
 ```
 
