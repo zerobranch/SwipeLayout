@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package mobile.sarproj.com.swipelayout;
+package mobile.sarproj.com.layout;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -43,7 +43,7 @@ import android.widget.FrameLayout;
  * Date: 2018-09-27
  * Repository #https://github.com/ArmanSar/SwipeLayout
  *
- * @author Arman Sargsyan
+ * @author Arman
  */
 public class SwipeLayout extends FrameLayout {
     public static final int LEFT = 1;

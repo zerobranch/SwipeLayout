@@ -13,7 +13,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import mobile.sarproj.com.app.R;
-import mobile.sarproj.com.swipelayout.SwipeLayout;
+import mobile.sarproj.com.layout.SwipeLayout;
 
 import static android.support.v7.widget.RecyclerView.NO_POSITION;
 
