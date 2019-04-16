@@ -81,7 +81,7 @@ Example of use. Swipe to the left
         android:paddingStart="20dp"  
         android:textSize="20sp"/>
 
-</mobile.sarproj.com.swipelayout.SwipeLayout>
+</mobile.sarproj.com.layout.SwipeLayout>
 ```
 ```
 Above is an example of a layout. For the correct operation of the swipe it is necessary to add <mobile.sarproj.com.swipelayout.SwipeLayout in your layout in which you need to specify the following parameters:
