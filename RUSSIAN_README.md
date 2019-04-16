@@ -81,7 +81,7 @@ dependencies {
         android:paddingStart="20dp"  
         android:textSize="20sp"/>
 
-</mobile.sarproj.com.swipelayout.SwipeLayout>
+</mobile.sarproj.com.layout.SwipeLayout>
 ```
 ```
 Выше представлен пример макета. Для корректной работы свайпа необходимо в своем макете добавить  <mobile.sarproj.com.swipelayout.SwipeLayout в котором нужно указать следующие параметры:
