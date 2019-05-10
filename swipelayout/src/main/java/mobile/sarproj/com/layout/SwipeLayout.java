@@ -64,6 +64,11 @@ public class SwipeLayout extends FrameLayout {
     private boolean isTogether;
 
     /**
+     * Is enabled Swipe
+     */
+    private boolean isEnabledSwipe;
+
+    /**
      * Swipe to the end of the screen.
      * Can work without a secondary view {@link #staticLeftView} and {@link #staticRightView}
      * <p>
@@ -133,6 +138,7 @@ public class SwipeLayout extends FrameLayout {
         isFreeHorizontalDrag = typedArray.getBoolean(R.styleable.SwipeLayout_isFreeHorizontalDrag, false);
         isContinuousSwipe = typedArray.getBoolean(R.styleable.SwipeLayout_isContinuousSwipe, false);
         isTogether = typedArray.getBoolean(R.styleable.SwipeLayout_isTogether, false);
+        isEnabledSwipe = typedArray.getBoolean(R.styleable.SwipeLayout_isEnabledSwipe, true);
         staticLeftViewId = typedArray.getResourceId(R.styleable.SwipeLayout_leftItem, 0);
         staticRightViewId = typedArray.getResourceId(R.styleable.SwipeLayout_rightItem, 0);
         draggedViewId = typedArray.getResourceId(R.styleable.SwipeLayout_draggedItem, 0);
@@ -210,6 +216,10 @@ public class SwipeLayout extends FrameLayout {
 
         @Override
         public int clampViewPositionHorizontal(@NonNull View child, int left, int dx) {
+            if (!isEnabledSwipe) {
+                return CLOSE_POSITION;
+            }
+
             switch (currentDirection) {
                 case LEFT:
                     return clampLeftViewPosition(left);
@@ -589,7 +599,26 @@ public class SwipeLayout extends FrameLayout {
     }
 
     /**
+     * Is enabled Swipe
+     *
+     * @return True if swipe is enabled, false otherwise.
+     */
+    public boolean isEnabledSwipe() {
+        return isEnabledSwipe;
+    }
+
+    /**
+     * Set the enabled swipe.
+     *
+     * @param enabledSwipe True if swipe is enabled, false otherwise.
+     */
+    public void setEnabledSwipe(boolean enabledSwipe) {
+        this.isEnabledSwipe = enabledSwipe;
+    }
+
+    /**
      * Performs manual swipe to the left
+     *
      * @param animated - flag to animate opening
      */
     public void openRight(boolean animated) {
@@ -609,6 +638,7 @@ public class SwipeLayout extends FrameLayout {
 
     /**
      * Performs a full manual swipe to the left
+     *
      * @param animated - flag to animate opening
      */
     public void openRightCompletely(boolean animated) {
@@ -629,6 +659,7 @@ public class SwipeLayout extends FrameLayout {
 
     /**
      * Performs manual swipe to the right
+     *
      * @param animated - flag to animate opening
      */
     public void openLeft(boolean animated) {
@@ -648,6 +679,7 @@ public class SwipeLayout extends FrameLayout {
 
     /**
      * Performs a full manual swipe to the right
+     *
      * @param animated - flag to animate opening
      */
     public void openLeftCompletely(boolean animated) {
@@ -668,6 +700,7 @@ public class SwipeLayout extends FrameLayout {
 
     /**
      * Performs manual close
+     *
      * @param animated - flag to animate closing
      */
     public void close(boolean animated) {

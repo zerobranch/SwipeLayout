@@ -5,6 +5,7 @@
             <flag name="left" value="1"/>
             <flag name="right" value="2"/>
         </attr>
+        <attr name="isEnabledSwipe" format="boolean"/>
         <attr name="isFreeDragAfterOpen" format="boolean"/>
         <attr name="isFreeHorizontalDrag" format="boolean"/>
         <attr name="isContinuousSwipe" format="boolean"/>
