@@ -12,7 +12,7 @@ SwipeLayout is a project for the android platform, providing the opportunity to 
 SwipeLayout is just a 'Custom ViewGroup', extended from FrameLayout, which provides easy and fast to use the 'swipe to dismiss' function, without using the ItemTouchHelper, for any layout.
 
 ## Download
-Download the sample [APK](https://github.com/ArmanSar/SwipeLayout/releases/download/1.0.9/SwipeLayout_app.apk) and try it out!
+Download the sample [APK](https://github.com/ArmanSar/SwipeLayout/releases/download/1.0.10/SwipeLayout_app.apk) and try it out!
 
 ## Screenshots
 <img src="/screenshots/left.gif" alt="left.gif" title="left.gif" width="180" height="340" /> <img src="/screenshots/right.gif" alt="right.gif" title="right.gif" width="180" height="340" /> <img src="/screenshots/horizontal.gif" alt="horizontal.gif" title="horizontal.gif" width="180" height="340" />
@@ -43,7 +43,7 @@ allprojects {
 Add the following dependency to your module's build.gradle:
 ```groovy
 dependencies {
-    implementation 'com.github.ArmanSar:SwipeLayout:1.0.9'
+    implementation 'com.github.ArmanSar:SwipeLayout:1.0.10'
 }
 ```
 
@@ -114,6 +114,7 @@ Above is an example of a layout. For the correct operation of the swipe it is ne
 - app:autoMovingSensitivity="1000" - sensitivity of automatic closing of the main view
 - app:rightDragViewPadding="0dp" - the right bounding border of the swipe for the main view
 - app:leftDragViewPadding="0dp" - the left bounding border of the swipe for the main view
+- app:isEnabledSwipe="false|true" - allows you to disable the swipe
 ```
 
 **Control from the code**
@@ -130,6 +131,7 @@ SwipeLayout.openRightCompletely(false) - execute swipe to the right to the end o
 SwipeLayout.openLeftCompletely(false) - execute swipe to the left to the end of the screen without animation
 SwipeLayout.isClosed() - is the main view in the default state
 SwipeLayout.isMoving() - is the main view in the moving
+SwipeLayout.setEnabledSwipe(false) - allows you to disable the swipe
 ```
 **Callback**
 ```java
