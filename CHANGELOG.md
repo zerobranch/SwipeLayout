@@ -6,3 +6,7 @@ Added commands to perform a swipe without animation.
 
 Version 1.0.9 *(2019-02-26)*
 The root package has been renamed.
+
+
+Version 1.0.10 *(2019-05-10)*
+Added ability to disable swipe.
