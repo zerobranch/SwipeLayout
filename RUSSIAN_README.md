@@ -12,7 +12,7 @@ SwipeLayout - это проект для платформы android, предо�
 SwipeLayout - это просто 'Custom ViewGroup', унаследованный от FrameLayout, которая дает возможность просто и легко использовать функцию 'swipe to dismiss', без использования ItemTouchHelper, для любого макета.
 
 ## Скачать
-Скачайте [APK](https://github.com/ArmanSar/SwipeLayout/releases/download/1.0.9/SwipeLayout_app.apk) данного примера и попробуйте!
+Скачайте [APK](https://github.com/ArmanSar/SwipeLayout/releases/download/1.0.10/SwipeLayout_app.apk) данного примера и попробуйте!
 
 ## Скриншоты
 <img src="/screenshots/left.gif" alt="left.gif" title="left.gif" width="180" height="340" /> <img src="/screenshots/right.gif" alt="right.gif" title="right.gif" width="180" height="340" /> <img src="/screenshots/horizontal.gif" alt="horizontal.gif" title="horizontal.gif" width="180" height="340" />
@@ -43,7 +43,7 @@ allprojects {
 Добавьте в build.gradle вашего модуля следующую зависимость:
 ```groovy
 dependencies {
-    implementation 'com.github.ArmanSar:SwipeLayout:1.0.9'
+    implementation 'com.github.ArmanSar:SwipeLayout:1.0.10'
 }
 ```
 
@@ -114,6 +114,7 @@ dependencies {
 - app:autoMovingSensitivity="1000" - чувствительность автоматического закрытия главного view
 - app:rightDragViewPadding="0dp" - правая ограничительная граница свайпа для главного view
 - app:leftDragViewPadding="0dp" - левая ограничительная граница свайпа для главного view
+- app:isEnabledSwipe="false|true" - позволяет отключить свайп
 ```
 
 **Программное управление**
@@ -130,6 +131,7 @@ SwipeLayout.openRightCompletely(false) - выполнить свайп впра�
 SwipeLayout.openLeftCompletely(false) - выполнить свайп влево до конца экрана без анимации
 SwipeLayout.isClosed() - находится ли главное view в исходном состоянии
 SwipeLayout.isMoving() - находится ли главное view в режиме перемещения
+SwipeLayout.setEnabledSwipe(false) - позволяет отключить свайп
 ```
 **Callback**
 ```java
