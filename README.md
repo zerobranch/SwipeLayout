@@ -43,7 +43,7 @@ allprojects {
 Add the following dependency to your module's build.gradle:
 ```groovy
 dependencies {
-    implementation 'com.github.ArmanSar:SwipeLayout:1.0.10'
+    implementation 'com.github.arman-sar:SwipeLayout:1.0.10'
 }
 ```
 
