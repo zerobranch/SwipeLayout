@@ -26,7 +26,9 @@ package mobile.sarproj.com.layout;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Point;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
@@ -34,6 +36,7 @@ import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 /**
@@ -41,7 +44,7 @@ import android.widget.FrameLayout;
  * in the direction specified by you.
  * <p>
  * Date: 2018-09-27
- * Repository #https://github.com/ArmanSar/SwipeLayout
+ * Repository #https://github.com/arman-sar/SwipeLayout
  *
  * @author Arman
  */
@@ -112,6 +115,11 @@ public class SwipeLayout extends FrameLayout {
      */
     private double autoOpenSpeed;
 
+    /**
+     * Disable intercept touch event for draggable view
+     */
+    private boolean disallowIntercept;
+
     private int currentDraggingState = ViewDragHelper.STATE_IDLE;
     private ViewDragHelper dragHelper;
     private GestureDetectorCompat gestureDetector;
@@ -150,6 +158,451 @@ public class SwipeLayout extends FrameLayout {
         typedArray.recycle();
     }
 
+    @Override
+    protected void onSizeChanged(int w, int h, int oldW, int oldH) {
+        horizontalWidth = w;
+        super.onSizeChanged(w, h, oldW, oldH);
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent event) {
+        if (disallowIntercept && isViewGroup(draggedView)) {
+            final View neededScrollView = getNeededTouchView(event, (ViewGroup) draggedView);
+            final Point touchPoint = new Point((int) event.getX(), (int) event.getY());
+
+            if (neededScrollView != null && isViewTouchTarget(neededScrollView, touchPoint)) {
+                return false;
+            }
+        }
+
+        return isSwipeViewTarget(event) && dragHelper.shouldInterceptTouchEvent(event);
+    }
+
+    @Override
+    public void requestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+        super.requestDisallowInterceptTouchEvent(disallowIntercept);
+        this.disallowIntercept = disallowIntercept;
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        if (draggedViewId != 0) {
+            draggedView = findViewById(draggedViewId);
+        }
+
+        if (staticLeftViewId != 0) {
+            staticLeftView = findViewById(staticLeftViewId);
+        }
+
+        if (staticRightViewId != 0) {
+            staticRightView = findViewById(staticRightViewId);
+        }
+
+        if (draggedView == null) {
+            throw new RuntimeException("'draggedItem' must be specified");
+        } else if (isTogether && currentDirection == LEFT && staticRightView == null) {
+            throw new RuntimeException("If 'isTogether = true' 'rightItem' must be specified");
+        } else if (isTogether && currentDirection == RIGHT && staticLeftView == null) {
+            throw new RuntimeException("If 'isTogether = true' 'leftItem' must be specified");
+        } else if (currentDirection == LEFT && !isContinuousSwipe && staticRightView == null) {
+            throw new RuntimeException("Must be specified 'rightItem' or flag isContinuousSwipe = true");
+        } else if (currentDirection == RIGHT && !isContinuousSwipe && staticLeftView == null) {
+            throw new RuntimeException("Must be specified 'leftItem' or flag isContinuousSwipe = true");
+        } else if (currentDirection == HORIZONTAL && (staticRightView == null || staticLeftView == null)) {
+            throw new RuntimeException("'leftItem' and 'rightItem' must be specified");
+        }
+
+        dragHelper = ViewDragHelper.create(this, 1.0f, dragHelperCallback);
+        gestureDetector = new GestureDetectorCompat(getContext(), gestureDetectorCallBack);
+
+        setupPost();
+        super.onFinishInflate();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (isSwipeViewTarget(event) || isMoving()) {
+            gestureDetector.onTouchEvent(event);
+            dragHelper.processTouchEvent(event);
+            return true;
+        } else {
+            return super.onTouchEvent(event);
+        }
+    }
+
+    @Override
+    public void computeScroll() {
+        if (dragHelper.continueSettling(true)) {
+            ViewCompat.postInvalidateOnAnimation(this);
+        }
+    }
+
+    /**
+     * Is enabled Swipe
+     *
+     * @return True if swipe is enabled, false otherwise.
+     */
+    public boolean isEnabledSwipe() {
+        return isEnabledSwipe;
+    }
+
+    /**
+     * Set the enabled swipe.
+     *
+     * @param enabledSwipe True if swipe is enabled, false otherwise.
+     */
+    public void setEnabledSwipe(boolean enabledSwipe) {
+        this.isEnabledSwipe = enabledSwipe;
+    }
+
+    /**
+     * Performs manual swipe to the left
+     *
+     * @param animated - flag to animate opening
+     */
+    public void openRight(boolean animated) {
+        if (animated) {
+            openRight();
+        } else if (isDragIdle(currentDraggingState) && ((currentDirection == LEFT && !isEmptyRightView())
+                || currentDirection == HORIZONTAL) && !isRightOpen) {
+            if (isTogether) {
+                staticRightView.offsetLeftAndRight(-1 * (isLeftOpen ? getRightViewWidth() * 2 : getRightViewWidth()));
+            }
+
+            draggedView.offsetLeftAndRight(-1 * (isLeftOpen ? getRightViewWidth() * 2 : getRightViewWidth()));
+            draggingViewLeft -= (isLeftOpen ? getRightViewWidth() * 2 : getRightViewWidth());
+            updateState();
+        }
+    }
+
+    /**
+     * Performs a full manual swipe to the left
+     *
+     * @param animated - flag to animate opening
+     */
+    public void openRightCompletely(boolean animated) {
+        if (animated) {
+            openRightCompletely();
+        } else {
+            if (isDragIdle(currentDraggingState) && currentDirection == LEFT) {
+                if (isTogether) {
+                    staticRightView.offsetLeftAndRight(-horizontalWidth);
+                }
+
+                draggedView.offsetLeftAndRight(-horizontalWidth);
+                draggingViewLeft -= horizontalWidth;
+                updateState();
+            }
+        }
+    }
+
+    /**
+     * Performs manual swipe to the right
+     *
+     * @param animated - flag to animate opening
+     */
+    public void openLeft(boolean animated) {
+        if (animated) {
+            openLeft();
+        } else if (isDragIdle(currentDraggingState) && ((currentDirection == RIGHT && !isEmptyLeftView())
+                || currentDirection == HORIZONTAL) && !isLeftOpen) {
+            if (isTogether) {
+                staticLeftView.offsetLeftAndRight((isRightOpen ? getLeftViewWidth() * 2 : getLeftViewWidth()));
+            }
+
+            draggedView.offsetLeftAndRight((isRightOpen ? getLeftViewWidth() * 2 : getLeftViewWidth()));
+            draggingViewLeft += (isRightOpen ? getLeftViewWidth() * 2 : getLeftViewWidth());
+            updateState();
+        }
+    }
+
+    /**
+     * Performs a full manual swipe to the right
+     *
+     * @param animated - flag to animate opening
+     */
+    public void openLeftCompletely(boolean animated) {
+        if (animated) {
+            openRightCompletely();
+        } else {
+            if (isDragIdle(currentDraggingState) && currentDirection == RIGHT) {
+                if (isTogether) {
+                    staticRightView.offsetLeftAndRight(horizontalWidth);
+                }
+
+                draggedView.offsetLeftAndRight(horizontalWidth);
+                draggingViewLeft += horizontalWidth;
+                updateState();
+            }
+        }
+    }
+
+    /**
+     * Performs manual close
+     *
+     * @param animated - flag to animate closing
+     */
+    public void close(boolean animated) {
+        if (animated) {
+            close();
+        } else {
+            if (isTogether) {
+                if (staticLeftView != null && currentDirection == RIGHT) {
+                    staticLeftView.layout(CLOSE_POSITION, staticLeftView.getTop(),
+                            staticLeftView.getWidth(), staticLeftView.getBottom());
+                } else if (staticRightView != null && currentDirection == LEFT) {
+                    staticRightView.layout(horizontalWidth - staticRightView.getWidth(), staticRightView.getTop(),
+                            horizontalWidth, staticRightView.getBottom());
+                } else if (currentDirection == HORIZONTAL && staticRightView != null && staticLeftView != null) {
+                    staticLeftView.layout(CLOSE_POSITION, staticLeftView.getTop(),
+                            staticLeftView.getWidth(), staticLeftView.getBottom());
+                    staticRightView.layout(horizontalWidth - staticRightView.getWidth(), staticRightView.getTop(),
+                            horizontalWidth, staticRightView.getBottom());
+                }
+            }
+
+            draggedView.layout(CLOSE_POSITION,
+                    draggedView.getTop(),
+                    draggedView.getWidth(),
+                    draggedView.getBottom());
+
+            draggingViewLeft = CLOSE_POSITION;
+            updateState();
+        }
+    }
+
+    /**
+     * Performs manual swipe to the right
+     */
+    public void openLeft() {
+        if (isDragIdle(currentDraggingState) && ((currentDirection == RIGHT && !isEmptyLeftView())
+                || currentDirection == HORIZONTAL)) {
+            moveTo(getLeftViewWidth());
+        }
+    }
+
+    /**
+     * Performs manual swipe to the left
+     */
+    public void openRight() {
+        if (isDragIdle(currentDraggingState) && ((currentDirection == LEFT && !isEmptyRightView())
+                || currentDirection == HORIZONTAL)) {
+            moveTo(-getRightViewWidth());
+        }
+    }
+
+    /**
+     * Performs a full manual swipe to the right
+     */
+    public void openLeftCompletely() {
+        if (isDragIdle(currentDraggingState) && currentDirection == RIGHT) {
+            moveTo(horizontalWidth);
+        }
+    }
+
+    /**
+     * Performs a full manual swipe to the left
+     */
+    public void openRightCompletely() {
+        if (isDragIdle(currentDraggingState) && currentDirection == LEFT) {
+            moveTo(-horizontalWidth);
+        }
+    }
+
+    /**
+     * Performs manual close
+     */
+    public void close() {
+        moveTo(CLOSE_POSITION);
+    }
+
+    /**
+     * Is moving main view
+     */
+    public boolean isMoving() {
+        return (currentDraggingState == ViewDragHelper.STATE_DRAGGING ||
+                currentDraggingState == ViewDragHelper.STATE_SETTLING);
+    }
+
+    /**
+     * Is closed main view
+     */
+    public boolean isClosed() {
+        return draggingViewLeft == CLOSE_POSITION;
+    }
+
+    /**
+     * Get current direction of a swipe
+     */
+    public int getCurrentDirection() {
+        return currentDirection;
+    }
+
+    /**
+     * Set current direction of a swipe
+     */
+    public SwipeLayout setCurrentDirection(int currentDirection) {
+        this.currentDirection = currentDirection;
+        return this;
+    }
+
+    /**
+     * Is move the secondary view along with the main view
+     */
+    public boolean isTogether() {
+        return isTogether;
+    }
+
+    /**
+     * The secondary view will move along with the main view
+     */
+    public SwipeLayout setTogether(boolean together) {
+        isTogether = together;
+        return this;
+    }
+
+    /**
+     * Swipe to the end of the screen.
+     * Can work without a secondary view {@link #staticLeftView} and {@link #staticRightView}
+     * <p>
+     * If a particular direction of the swipe is used ({@link #LEFT} or {@link #RIGHT}),
+     * and this flag is set, then {@link #isFreeDragAfterOpen} always will be true.
+     * <p>
+     * If the left and right directions of the swipe are used simultaneously ({@link #HORIZONTAL}),
+     * then this flag will be ignored
+     */
+    public boolean isContinuousSwipe() {
+        return isContinuousSwipe;
+    }
+
+    /**
+     * Swipe to the end of the screen.
+     * Can work without a secondary view {@link #staticLeftView} and {@link #staticRightView}
+     * <p>
+     * If a particular direction of the swipe is used ({@link #LEFT} or {@link #RIGHT}),
+     * and this flag is set, then {@link #isFreeDragAfterOpen} always will be true.
+     * <p>
+     * If the left and right directions of the swipe are used simultaneously ({@link #HORIZONTAL}),
+     * then this flag will be ignored
+     */
+    public SwipeLayout setContinuousSwipe(boolean continuousSwipe) {
+        isContinuousSwipe = continuousSwipe;
+        parametersAdjustment();
+        return this;
+    }
+
+    /**
+     * Moving the main view after it was open.
+     * <p>
+     * if {@link #isEmptyLeftView()} or {@link #isEmptyRightView()},
+     * then this flag will be ignored
+     */
+    public boolean isFreeDragAfterOpen() {
+        return isFreeDragAfterOpen;
+    }
+
+    /**
+     * Moving the main view after it was open.
+     * <p>
+     * if {@link #isEmptyLeftView()} or {@link #isEmptyRightView()},
+     * then this flag will be ignored
+     */
+    public SwipeLayout setFreeDragAfterOpen(boolean freeDragAfterOpen) {
+        isFreeDragAfterOpen = freeDragAfterOpen;
+        parametersAdjustment();
+        return this;
+    }
+
+    /**
+     * If a particular direction of the swipe is used ({@link #LEFT} or {@link #RIGHT}),
+     * then this flag allows you to do the swipe in the opposite direction.
+     * <p>
+     * If the horizontal direction is used ({@link #HORIZONTAL}),
+     * this flag allows you to move the main view continuously in both directions
+     */
+    public boolean isFreeHorizontalDrag() {
+        return isFreeHorizontalDrag;
+    }
+
+    /**
+     * If a particular direction of the swipe is used ({@link #LEFT} or {@link #RIGHT}),
+     * then this flag allows you to do the swipe in the opposite direction.
+     * <p>
+     * If the horizontal direction is used ({@link #HORIZONTAL}),
+     * this flag allows you to move the main view continuously in both directions
+     */
+    public SwipeLayout setFreeHorizontalDrag(boolean freeHorizontalDrag) {
+        isFreeHorizontalDrag = freeHorizontalDrag;
+        return this;
+    }
+
+    /**
+     * Is open right view
+     */
+    public boolean isRightOpen() {
+        return isRightOpen;
+    }
+
+    /**
+     * Is open left view
+     */
+    public boolean isLeftOpen() {
+        return isLeftOpen;
+    }
+
+    /**
+     * Set swipe actions listener
+     */
+    public SwipeLayout setOnActionsListener(@Nullable SwipeActionsListener actionsListener) {
+        this.actionsListener = actionsListener;
+        return this;
+    }
+
+    /**
+     * Get the right bounding border of the swipe for the main view
+     */
+    public int getRightDragViewPadding() {
+        return rightDragViewPadding;
+    }
+
+    /**
+     * Set the right bounding border of the swipe for the main view
+     */
+    public SwipeLayout setRightDragViewPadding(int minRightDragViewPadding) {
+        this.rightDragViewPadding = minRightDragViewPadding;
+        parametersAdjustment();
+        return this;
+    }
+
+    /**
+     * Get the left bounding border of the swipe for the main view
+     */
+    public int getLeftDragViewPadding() {
+        return leftDragViewPadding;
+    }
+
+    /**
+     * Set the left bounding border of the swipe for the main view
+     */
+    public SwipeLayout setLeftDragViewPadding(int minLeftDragViewPadding) {
+        this.leftDragViewPadding = minLeftDragViewPadding;
+        parametersAdjustment();
+        return this;
+    }
+
+    /**
+     * Enable touch for ViewGroup
+     */
+    public void enableTouchForViewGroup(@NonNull final ViewGroup viewGroup) {
+        viewGroup.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
+    }
+
     private void updateState() {
         if (isClosed()) {
             isLeftOpen = false;
@@ -174,6 +627,16 @@ public class SwipeLayout extends FrameLayout {
             }
         }
     }
+
+    private GestureDetector.OnGestureListener gestureDetectorCallBack = new GestureDetector.SimpleOnGestureListener() {
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            if (getParent() != null) {
+                getParent().requestDisallowInterceptTouchEvent(true);
+            }
+            return false;
+        }
+    };
 
     private final ViewDragHelper.Callback dragHelperCallback = new ViewDragHelper.Callback() {
         @Override
@@ -439,51 +902,6 @@ public class SwipeLayout extends FrameLayout {
                 || (draggingViewLeft <= CLOSE_POSITION && Math.abs(draggingViewLeft) < getRightViewWidth() / 2);
     }
 
-    @Override
-    protected void onFinishInflate() {
-        if (draggedViewId != 0) {
-            draggedView = findViewById(draggedViewId);
-        }
-
-        if (staticLeftViewId != 0) {
-            staticLeftView = findViewById(staticLeftViewId);
-        }
-
-        if (staticRightViewId != 0) {
-            staticRightView = findViewById(staticRightViewId);
-        }
-
-        if (draggedView == null) {
-            throw new RuntimeException("'draggedItem' must be specified");
-        } else if (isTogether && currentDirection == LEFT && staticRightView == null) {
-            throw new RuntimeException("If 'isTogether = true' 'rightItem' must be specified");
-        } else if (isTogether && currentDirection == RIGHT && staticLeftView == null) {
-            throw new RuntimeException("If 'isTogether = true' 'leftItem' must be specified");
-        } else if (currentDirection == LEFT && !isContinuousSwipe && staticRightView == null) {
-            throw new RuntimeException("Must be specified 'rightItem' or flag isContinuousSwipe = true");
-        } else if (currentDirection == RIGHT && !isContinuousSwipe && staticLeftView == null) {
-            throw new RuntimeException("Must be specified 'leftItem' or flag isContinuousSwipe = true");
-        } else if (currentDirection == HORIZONTAL && (staticRightView == null || staticLeftView == null)) {
-            throw new RuntimeException("'leftItem' and 'rightItem' must be specified");
-        }
-
-        dragHelper = ViewDragHelper.create(this, 1.0f, dragHelperCallback);
-        gestureDetector = new GestureDetectorCompat(getContext(), gestureDetectorCallBack);
-
-        setupPost();
-        super.onFinishInflate();
-    }
-
-    private GestureDetector.OnGestureListener gestureDetectorCallBack = new GestureDetector.SimpleOnGestureListener() {
-        @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            if (getParent() != null) {
-                getParent().requestDisallowInterceptTouchEvent(true);
-            }
-            return false;
-        }
-    };
-
     private void setupPost() {
         if (isTogether) {
             post(new Runnable() {
@@ -502,26 +920,39 @@ public class SwipeLayout extends FrameLayout {
         }
     }
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldW, int oldH) {
-        horizontalWidth = w;
-        super.onSizeChanged(w, h, oldW, oldH);
+    private boolean isViewTouchTarget(View view, Point point) {
+        return point.y >= view.getTop()
+                && point.y < view.getBottom()
+                && point.x >= view.getLeft()
+                && point.y < view.getRight();
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent event) {
-        return isSwipeViewTarget(event) && dragHelper.shouldInterceptTouchEvent(event);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (isSwipeViewTarget(event) || isMoving()) {
-            gestureDetector.onTouchEvent(event);
-            dragHelper.processTouchEvent(event);
-            return true;
-        } else {
-            return super.onTouchEvent(event);
+    private View getNeededTouchView(MotionEvent event, ViewGroup rootView) {
+        if (rootView.onInterceptTouchEvent(event)) {
+            return rootView;
         }
+
+        int count = rootView.getChildCount();
+
+        for (int i = 0; i < count; i++) {
+            View view = rootView.getChildAt(i);
+
+            if (!isViewGroup(view)) {
+                continue;
+            }
+
+            View neededScrollView = getNeededTouchView(event, (ViewGroup) view);
+
+            if (neededScrollView != null) {
+                return neededScrollView;
+            }
+        }
+
+        return null;
+    }
+
+    private boolean isViewGroup(View view) {
+        return view instanceof ViewGroup;
     }
 
     private boolean isSwipeViewTarget(MotionEvent event) {
@@ -531,13 +962,6 @@ public class SwipeLayout extends FrameLayout {
         final int lowerLimit = swipeViewLocation[1];
         final int y = (int) event.getRawY();
         return (y > lowerLimit && y < upperLimit);
-    }
-
-    @Override
-    public void computeScroll() {
-        if (dragHelper.continueSettling(true)) {
-            ViewCompat.postInvalidateOnAnimation(this);
-        }
     }
 
     private boolean isIdleAfterMoving(int state) {
@@ -596,280 +1020,6 @@ public class SwipeLayout extends FrameLayout {
     private void moveTo(int x) {
         dragHelper.smoothSlideViewTo(draggedView, x, draggedView.getTop());
         ViewCompat.postInvalidateOnAnimation(this);
-    }
-
-    /**
-     * Is enabled Swipe
-     *
-     * @return True if swipe is enabled, false otherwise.
-     */
-    public boolean isEnabledSwipe() {
-        return isEnabledSwipe;
-    }
-
-    /**
-     * Set the enabled swipe.
-     *
-     * @param enabledSwipe True if swipe is enabled, false otherwise.
-     */
-    public void setEnabledSwipe(boolean enabledSwipe) {
-        this.isEnabledSwipe = enabledSwipe;
-    }
-
-    /**
-     * Performs manual swipe to the left
-     *
-     * @param animated - flag to animate opening
-     */
-    public void openRight(boolean animated) {
-        if (animated) {
-            openRight();
-        } else if (isDragIdle(currentDraggingState) && ((currentDirection == LEFT && !isEmptyRightView())
-                || currentDirection == HORIZONTAL) && !isRightOpen) {
-            if (isTogether) {
-                staticRightView.offsetLeftAndRight(-1 * (isLeftOpen ? getRightViewWidth() * 2 : getRightViewWidth()));
-            }
-
-            draggedView.offsetLeftAndRight(-1 * (isLeftOpen ? getRightViewWidth() * 2 : getRightViewWidth()));
-            draggingViewLeft -= (isLeftOpen ? getRightViewWidth() * 2 : getRightViewWidth());
-            updateState();
-        }
-    }
-
-    /**
-     * Performs a full manual swipe to the left
-     *
-     * @param animated - flag to animate opening
-     */
-    public void openRightCompletely(boolean animated) {
-        if (animated) {
-            openRightCompletely();
-        } else {
-            if (isDragIdle(currentDraggingState) && currentDirection == LEFT) {
-                if (isTogether) {
-                    staticRightView.offsetLeftAndRight(-horizontalWidth);
-                }
-
-                draggedView.offsetLeftAndRight(-horizontalWidth);
-                draggingViewLeft -= horizontalWidth;
-                updateState();
-            }
-        }
-    }
-
-    /**
-     * Performs manual swipe to the right
-     *
-     * @param animated - flag to animate opening
-     */
-    public void openLeft(boolean animated) {
-        if (animated) {
-            openLeft();
-        } else if (isDragIdle(currentDraggingState) && ((currentDirection == RIGHT && !isEmptyLeftView())
-                || currentDirection == HORIZONTAL) && !isLeftOpen) {
-            if (isTogether) {
-                staticLeftView.offsetLeftAndRight((isRightOpen ? getLeftViewWidth() * 2 : getLeftViewWidth()));
-            }
-
-            draggedView.offsetLeftAndRight((isRightOpen ? getLeftViewWidth() * 2 : getLeftViewWidth()));
-            draggingViewLeft += (isRightOpen ? getLeftViewWidth() * 2 : getLeftViewWidth());
-            updateState();
-        }
-    }
-
-    /**
-     * Performs a full manual swipe to the right
-     *
-     * @param animated - flag to animate opening
-     */
-    public void openLeftCompletely(boolean animated) {
-        if (animated) {
-            openRightCompletely();
-        } else {
-            if (isDragIdle(currentDraggingState) && currentDirection == RIGHT) {
-                if (isTogether) {
-                    staticRightView.offsetLeftAndRight(horizontalWidth);
-                }
-
-                draggedView.offsetLeftAndRight(horizontalWidth);
-                draggingViewLeft += horizontalWidth;
-                updateState();
-            }
-        }
-    }
-
-    /**
-     * Performs manual close
-     *
-     * @param animated - flag to animate closing
-     */
-    public void close(boolean animated) {
-        if (animated) {
-            close();
-        } else {
-            if (isTogether) {
-                if (staticLeftView != null && currentDirection == RIGHT) {
-                    staticLeftView.layout(CLOSE_POSITION, staticLeftView.getTop(),
-                            staticLeftView.getWidth(), staticLeftView.getBottom());
-                } else if (staticRightView != null && currentDirection == LEFT) {
-                    staticRightView.layout(horizontalWidth - staticRightView.getWidth(), staticRightView.getTop(),
-                            horizontalWidth, staticRightView.getBottom());
-                } else if (currentDirection == HORIZONTAL && staticRightView != null && staticLeftView != null) {
-                    staticLeftView.layout(CLOSE_POSITION, staticLeftView.getTop(),
-                            staticLeftView.getWidth(), staticLeftView.getBottom());
-                    staticRightView.layout(horizontalWidth - staticRightView.getWidth(), staticRightView.getTop(),
-                            horizontalWidth, staticRightView.getBottom());
-                }
-            }
-
-            draggedView.layout(CLOSE_POSITION,
-                    draggedView.getTop(),
-                    draggedView.getWidth(),
-                    draggedView.getBottom());
-
-            draggingViewLeft = CLOSE_POSITION;
-            updateState();
-        }
-    }
-
-    /**
-     * Performs manual swipe to the right
-     */
-    public void openLeft() {
-        if (isDragIdle(currentDraggingState) && ((currentDirection == RIGHT && !isEmptyLeftView())
-                || currentDirection == HORIZONTAL)) {
-            moveTo(getLeftViewWidth());
-        }
-    }
-
-    /**
-     * Performs manual swipe to the left
-     */
-    public void openRight() {
-        if (isDragIdle(currentDraggingState) && ((currentDirection == LEFT && !isEmptyRightView())
-                || currentDirection == HORIZONTAL)) {
-            moveTo(-getRightViewWidth());
-        }
-    }
-
-    /**
-     * Performs a full manual swipe to the right
-     */
-    public void openLeftCompletely() {
-        if (isDragIdle(currentDraggingState) && currentDirection == RIGHT) {
-            moveTo(horizontalWidth);
-        }
-    }
-
-    /**
-     * Performs a full manual swipe to the left
-     */
-    public void openRightCompletely() {
-        if (isDragIdle(currentDraggingState) && currentDirection == LEFT) {
-            moveTo(-horizontalWidth);
-        }
-    }
-
-    /**
-     * Performs manual close
-     */
-    public void close() {
-        moveTo(CLOSE_POSITION);
-    }
-
-    /**
-     * Is moving main view
-     */
-    public boolean isMoving() {
-        return (currentDraggingState == ViewDragHelper.STATE_DRAGGING ||
-                currentDraggingState == ViewDragHelper.STATE_SETTLING);
-    }
-
-    /**
-     * Is closed main view
-     */
-    public boolean isClosed() {
-        return draggingViewLeft == CLOSE_POSITION;
-    }
-
-    public int getCurrentDirection() {
-        return currentDirection;
-    }
-
-    public SwipeLayout setCurrentDirection(int currentDirection) {
-        this.currentDirection = currentDirection;
-        return this;
-    }
-
-    public boolean isTogether() {
-        return isTogether;
-    }
-
-    public SwipeLayout setTogether(boolean together) {
-        isTogether = together;
-        return this;
-    }
-
-    public boolean isContinuousSwipe() {
-        return isContinuousSwipe;
-    }
-
-    public SwipeLayout setContinuousSwipe(boolean continuousSwipe) {
-        isContinuousSwipe = continuousSwipe;
-        parametersAdjustment();
-        return this;
-    }
-
-    public boolean isFreeDragAfterOpen() {
-        return isFreeDragAfterOpen;
-    }
-
-    public SwipeLayout setFreeDragAfterOpen(boolean freeDragAfterOpen) {
-        isFreeDragAfterOpen = freeDragAfterOpen;
-        parametersAdjustment();
-        return this;
-    }
-
-    public boolean isFreeHorizontalDrag() {
-        return isFreeHorizontalDrag;
-    }
-
-    public SwipeLayout setFreeHorizontalDrag(boolean freeHorizontalDrag) {
-        isFreeHorizontalDrag = freeHorizontalDrag;
-        return this;
-    }
-
-    public boolean isRightOpen() {
-        return isRightOpen;
-    }
-
-    public boolean isLeftOpen() {
-        return isLeftOpen;
-    }
-
-    public SwipeLayout setOnActionsListener(SwipeActionsListener actionsListener) {
-        this.actionsListener = actionsListener;
-        return this;
-    }
-
-    public int getRightDragViewPadding() {
-        return rightDragViewPadding;
-    }
-
-    public SwipeLayout setRightDragViewPadding(int minRightDragViewPadding) {
-        this.rightDragViewPadding = minRightDragViewPadding;
-        parametersAdjustment();
-        return this;
-    }
-
-    public int getLeftDragViewPadding() {
-        return leftDragViewPadding;
-    }
-
-    public SwipeLayout setLeftDragViewPadding(int minLeftDragViewPadding) {
-        this.leftDragViewPadding = minLeftDragViewPadding;
-        parametersAdjustment();
-        return this;
     }
 
     public interface SwipeActionsListener {
