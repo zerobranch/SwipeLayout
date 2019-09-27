@@ -12,7 +12,7 @@ SwipeLayout - это проект для платформы android, предо�
 SwipeLayout - это просто 'Custom ViewGroup', унаследованный от FrameLayout, которая дает возможность просто и легко использовать функцию 'swipe to dismiss', без использования ItemTouchHelper, для любого макета.
 
 ## Скачать
-Скачайте [APK](https://github.com/ArmanSar/SwipeLayout/releases/download/1.0.10/SwipeLayout_app.apk) данного примера и попробуйте!
+Скачайте [APK](https://github.com/arman-sar/SwipeLayout/releases/download/1.0.11/SwipeLayout_app.apk) данного примера и попробуйте!
 
 ## Скриншоты
 <img src="/screenshots/left.gif" alt="left.gif" title="left.gif" width="180" height="340" /> <img src="/screenshots/right.gif" alt="right.gif" title="right.gif" width="180" height="340" /> <img src="/screenshots/horizontal.gif" alt="horizontal.gif" title="horizontal.gif" width="180" height="340" />
@@ -43,7 +43,7 @@ allprojects {
 Добавьте в build.gradle вашего модуля следующую зависимость:
 ```groovy
 dependencies {
-    implementation 'com.github.arman-sar:SwipeLayout:1.0.10'
+    implementation 'com.github.arman-sar:SwipeLayout:1.0.11'
 }
 ```
 
@@ -132,6 +132,7 @@ SwipeLayout.openLeftCompletely(false) - выполнить свайп влево
 SwipeLayout.isClosed() - находится ли главное view в исходном состоянии
 SwipeLayout.isMoving() - находится ли главное view в режиме перемещения
 SwipeLayout.setEnabledSwipe(false) - позволяет отключить свайп
+SwipeLayout.enableTouchForViewGroup(ViewGroup) - позволяет использовать события касания для ViewGroup
 ```
 **Callback**
 ```java
