@@ -14,3 +14,7 @@ Added ability to disable swipe.
 
 Version 1.0.11 *(2019-09-27)*
 Added ability to intercept touch
+
+
+Version 1.1.0 *(2019-09-27)*
+Migrate to Android X
