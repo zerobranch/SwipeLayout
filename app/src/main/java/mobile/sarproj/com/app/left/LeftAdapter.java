@@ -1,8 +1,8 @@
 package mobile.sarproj.com.app.left;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +15,7 @@ import java.util.List;
 import mobile.sarproj.com.app.R;
 import mobile.sarproj.com.layout.SwipeLayout;
 
-import static android.support.v7.widget.RecyclerView.NO_POSITION;
+import static androidx.recyclerview.widget.RecyclerView.NO_POSITION;
 
 public class LeftAdapter extends RecyclerView.Adapter<LeftAdapter.ItemHolder> {
     private List<String> items;
