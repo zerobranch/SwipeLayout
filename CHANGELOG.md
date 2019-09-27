@@ -10,3 +10,7 @@ The root package has been renamed.
 
 Version 1.0.10 *(2019-05-10)*
 Added ability to disable swipe.
+
+
+Version 1.0.11 *(2019-09-27)*
+Added ability to intercept touch
