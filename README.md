@@ -26,7 +26,7 @@ Download the sample [APK](https://github.com/arman-sar/SwipeLayout/releases/down
 
 ## Integration
 **Option 1**
-Copy the attrs.xml file to the src/res/values folder and the SwipeLayout.java file to the source code folder of your project from the [gist](https://gist.github.com/arman-sar/64359efd499ed38f6996390e79a5eadc) and to use.
+Copy the attrs.xml file to the src/res/values folder and the SwipeLayout.java file to the source code folder of your project from the [gist](https://gist.github.com/zerobranch/64359efd499ed38f6996390e79a5eadc) and to use.
 
 **Option 2**
 
