@@ -26,7 +26,7 @@ SwipeLayout - это просто 'Custom ViewGroup', унаследованны
 
 ## Интеграция
 **Вариант 1**
-Скопируйте файл attrs.xml в папку src/res/values и файл SwipeLayout.java в папку с исходным кодом вашего проекта из [gist](https://gist.github.com/arman-sar/64359efd499ed38f6996390e79a5eadc) и используйте.
+Скопируйте файл attrs.xml в папку src/res/values и файл SwipeLayout.java в папку с исходным кодом вашего проекта из [gist](https://gist.github.com/zerobranch/64359efd499ed38f6996390e79a5eadc) и используйте.
 
 **Вариант 2**
 
