@@ -1,13 +1,14 @@
-package mobile.sarproj.com.app;
+package com.zerobranch.example;
 
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
-import mobile.sarproj.com.app.horizontal.HorizontalActivity;
-import mobile.sarproj.com.app.left.LeftActivity;
-import mobile.sarproj.com.app.right.RightActivity;
+import com.zerobranch.example.left.LeftActivity;
+
+import com.zerobranch.example.horizontal.HorizontalActivity;
+import com.zerobranch.example.right.RightActivity;
 
 public class MainActivity extends AppCompatActivity {
 

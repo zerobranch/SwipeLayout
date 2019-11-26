@@ -1,8 +1,10 @@
-package mobile.sarproj.com.app.horizontal;
+package com.zerobranch.example.horizontal;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
+import com.zerobranch.example.R;
+import com.zerobranch.layout.SwipeLayout;
 
-import mobile.sarproj.com.app.R;
-import mobile.sarproj.com.layout.SwipeLayout;
+import java.util.List;
 
 import static androidx.recyclerview.widget.RecyclerView.NO_POSITION;
 

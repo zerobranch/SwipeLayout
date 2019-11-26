@@ -1,14 +1,15 @@
-package mobile.sarproj.com.app.right;
+package com.zerobranch.example.right;
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.zerobranch.example.R;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import mobile.sarproj.com.app.R;
 
 public class RightActivity extends AppCompatActivity {
 

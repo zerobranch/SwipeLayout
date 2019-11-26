@@ -21,6 +21,6 @@ android {
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation 'com.github.arman-sar:SwipeLayout:1.1.1'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation project(path: ':swipelayout')
 }

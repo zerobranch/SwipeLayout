@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package mobile.sarproj.com.layout;
+package com.zerobranch.layout;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -44,7 +44,7 @@ import android.widget.FrameLayout;
  * in the direction specified by you.
  * <p>
  * Date: 2018-09-27
- * Repository #https://github.com/arman-sar/SwipeLayout
+ * Repository #https://github.com/zerobranch/SwipeLayout
  *
  * @author Arman
  */

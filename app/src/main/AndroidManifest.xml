@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="mobile.sarproj.com.app">
+          package="com.zerobranch.example">
 
     <application
         android:allowBackup="true"
@@ -16,12 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".left.LeftActivity">
-        </activity>
-        <activity android:name=".right.RightActivity">
-        </activity>
-        <activity android:name=".horizontal.HorizontalActivity">
-        </activity>
+
+        <activity android:name=".left.LeftActivity"/>
+        <activity android:name=".right.RightActivity"/>
+        <activity android:name=".horizontal.HorizontalActivity"/>
     </application>
 
 </manifest>
