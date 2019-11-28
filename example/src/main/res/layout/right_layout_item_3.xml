@@ -1,0 +1,40 @@
+<com.zerobranch.layout.SwipeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe_layout"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:layout_marginTop="3dp"
+    app:draggedItem="@id/drag_item"
+    app:swipeDirection="right"
+    app:leftItem="@id/left_text_view"
+    app:isContinuousSwipe="true"
+    app:isFreeHorizontalDrag="true"
+    app:isTogether="true">
+
+    <TextView
+        android:id="@+id/left_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ff5722"
+        android:gravity="center"
+        android:text="Removed"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/drag_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#eeeeee"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?selectableItemBackgroundBorderless"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingEnd="10dp"
+        android:paddingStart="20dp"
+        android:textSize="20sp"/>
+
+</com.zerobranch.layout.SwipeLayout>
+
