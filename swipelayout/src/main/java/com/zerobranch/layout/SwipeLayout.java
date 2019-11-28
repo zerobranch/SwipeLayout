@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2018 Arman
+ * Copyright (c) 2018 zerobranch
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@ import android.widget.FrameLayout;
  * Date: 2018-09-27
  * Repository #https://github.com/zerobranch/SwipeLayout
  *
- * @author Arman
+ * @author zerobranch
  */
 public class SwipeLayout extends FrameLayout {
     public static final int LEFT = 1;
