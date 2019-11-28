@@ -1,1 +1,1 @@
-include ':swipelayout', ':app'
+include ':swipelayout', ':example'
