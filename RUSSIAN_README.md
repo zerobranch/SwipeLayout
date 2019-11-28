@@ -1,18 +1,18 @@
 # SwipeLayout
-[![](https://jitpack.io/v/ArmanSar/SwipeLayout.svg)](https://jitpack.io/#ArmanSar/SwipeLayout) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/ArmanSar/SwipeLayout/blob/master/LICENSE) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SwipeLayout-green.svg?style=flat)](https://android-arsenal.com/details/1/7215)
+[![](https://jitpack.io/v/zerobranch/SwipeLayout.svg)](https://jitpack.io/#zerobranch/SwipeLayout) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/zerobranch/SwipeLayout/blob/master/LICENSE) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SwipeLayout-green.svg?style=flat)](https://android-arsenal.com/details/1/7215)
 
 SwipeLayout - это проект для платформы android, предоставляющий возможность выполнять свайп для любого макета, в указанном направлении.
 
 ### Выберите язык
-[English](https://github.com/ArmanSar/SwipeLayout/blob/master/README.md) 
+[English](https://github.com/zerobranch/SwipeLayout/blob/master/README.md) 
 
-[Русский](https://github.com/ArmanSar/SwipeLayout/blob/master/RUSSIAN_README.md)
+[Русский](https://github.com/zerobranch/SwipeLayout/blob/master/RUSSIAN_README.md)
 
 ## Описание
 SwipeLayout - это просто 'Custom ViewGroup', унаследованный от FrameLayout, которая дает возможность просто и легко использовать функцию 'swipe to dismiss', без использования ItemTouchHelper, для любого макета.
 
 ## Скачать
-Скачайте [APK](https://github.com/arman-sar/SwipeLayout/releases/download/1.1.1/SwipeLayout_app.apk) данного примера и попробуйте!
+Скачайте [APK](https://github.com/zerobranch/SwipeLayout/releases/download/1.3.0/SwipeLayout_app.apk) данного примера и попробуйте!
 
 ## Скриншоты
 <img src="/screenshots/left.gif" alt="left.gif" title="left.gif" width="180" height="340" /> <img src="/screenshots/right.gif" alt="right.gif" title="right.gif" width="180" height="340" /> <img src="/screenshots/horizontal.gif" alt="horizontal.gif" title="horizontal.gif" width="180" height="340" />
@@ -43,14 +43,14 @@ allprojects {
 Добавьте в build.gradle вашего модуля следующую зависимость:
 ```groovy
 dependencies {
-    implementation 'com.github.arman-sar:SwipeLayout:1.1.1'
+    implementation 'com.github.zerobranch:SwipeLayout:1.3.0'
 }
 ```
 
 ## Как использовать ?
 Пример использования. Свайп влево
 ```xml
-<mobile.sarproj.com.layout.SwipeLayout
+<com.zerobranch.layout.SwipeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipe_layout"
@@ -81,7 +81,7 @@ dependencies {
         android:paddingStart="20dp"  
         android:textSize="20sp"/>
 
-</mobile.sarproj.com.layout.SwipeLayout>
+</com.zerobranch.layout.SwipeLayout>
 ```
 ```
 Выше представлен пример макета. Для корректной работы свайпа необходимо в своем макете добавить  <mobile.sarproj.com.swipelayout.SwipeLayout в котором нужно указать следующие параметры:
@@ -166,7 +166,7 @@ SwipeLayout.setOnActionsListener(new SwipeLayout.SwipeActionsListener() {
 ```
 The MIT License (MIT)
 
-Copyright (c) 2018 Arman
+Copyright (c) 2018 zerobranch
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
