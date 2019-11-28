@@ -18,3 +18,7 @@ Added ability to intercept touch
 
 Version 1.1.1 *(2019-09-27)*
 Migrate to Android X
+
+
+Version 1.3.0 *(2019-11-28)*
+Migrate to zerobranch
