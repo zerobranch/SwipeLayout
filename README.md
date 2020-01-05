@@ -43,7 +43,7 @@ allprojects {
 Add the following dependency to your module's build.gradle:
 ```groovy
 dependencies {
-    implementation 'com.github.zerobranch:SwipeLayout:1.3.0'
+    implementation 'com.github.zerobranch:SwipeLayout:1.3.1'
 }
 ```
 
